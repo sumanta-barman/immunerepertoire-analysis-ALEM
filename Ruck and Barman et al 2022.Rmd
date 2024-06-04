@@ -1,0 +1,536 @@
+---
+title: "Ruck and Barman et al 2024: Alemtuzumab-induced immune phenotype and repertoire changes: implications for secondary autoimmunity"
+author: "Sumanta Barman"
+date: "2022"
+output: html_document
+---
+
+
+##Percentage of persisting vs new clones
+```{r}
+# library
+library(ggplot2)
+library(dplyr)
+library(viridis)
+library(tidyr)
+library(reshape2)
+library(RColorBrewer)
+
+# load a dataset
+mydata <- read.table("file.txt", sep = "", header = TRUE)
+
+mydata <- mydata %>% 
+  mutate(ind = factor(row_number())) %>%  
+  gather(variable, value, -ind)
+
+my_colors <- RColorBrewer::brewer.pal(4, "Set1")[3:2]
+
+p <- ggplot(mydata, aes(fill=ind, y=value, x=variable)) + 
+  geom_bar(position="fill", stat="identity")  + guides(fill=guide_legend(title=("")))  +
+  theme(axis.text = element_text(size = (12), face = "bold"), axis.title = element_text(size = (14), face = "bold"), 
+        legend.text = element_text(size = (13), face = "bold"), legend.title = element_text(size = (13), face = "bold"), axis.title.x = element_text(margin = margin (t = 8)), axis.title.y = element_text(margin = margin (r = 8))) + 
+  scale_y_continuous(labels = scales::percent_format()) + xlab("Patients") + scale_fill_manual(values = my_colors, labels = c("Persisting clones", "New clones")) +
+  ylab("Repertoire")
+p
+
+ggsave("persisting vs new clones.pdf", p, device = "pdf", width = 10, height = 4)
+```
+
+
+
+##Percentage of topVJ vs other VJ
+```{r}
+# library
+library(ggplot2)
+library(dplyr)
+library(viridis)
+library(tidyr)
+library(reshape2)
+library(RColorBrewer)
+
+# load a dataset
+mydata <- read.table("file.txt", sep = "", header = TRUE); 
+
+mydata <- mydata %>% 
+  mutate(ind = factor(row_number())) %>%  
+  gather(variable, value, -ind)
+
+p <- ggplot(datm, aes(fill=ind, y=value, x=variable)) + 
+  geom_bar(position="fill", stat="identity", colour = "black", size = .3)  + guides(fill=guide_legend(title=("VJ usage indices")), face = "bold")  +
+  theme(axis.text = element_text(size = (12), face = "bold"), axis.title = element_text(size = (14), face = "bold"), 
+        legend.text = element_text(size = (13), face = "bold"), legend.title = element_text(size = (13), face = "bold"), axis.title.x = element_text(margin = margin (t = 8)), axis.title.y = element_text(margin = margin (r = 8))) + 
+  scale_y_continuous(labels = scales::percent_format()) + xlab("Patients") + scale_fill_manual(values = c("#009E73", "orange2"), labels = c("Other VJ", "Top VJ")) + #scale_fill_manual(values = my_colors, labels = c("Other VJ", "Top VJ")) +
+  ylab("Repertoire (VJ)")
+p
+
+ggsave("topVJ vs other VJ.pdf", p, device = "pdf", width = 10, height = 4)
+
+```
+
+
+##Persisting vs new most abandant VJ
+
+
+```{r}
+# library
+library(ggplot2)
+library(dplyr)
+library(viridis)
+library(tidyr)
+library(reshape2)
+library(RColorBrewer)
+
+# load a dataset
+mydata <- read.table("file.txt", sep = "", header = TRUE); 
+mydata  <- mydata %>% 
+  mutate(ind = factor(row_number())) %>%  
+  gather(variable, value, -ind)
+
+my_colors <- RColorBrewer::brewer.pal(4, "Set1")[3:2]
+
+p <- ggplot(mydata, aes(fill=ind, y=value, x=variable)) + 
+  geom_bar(position="fill", stat="identity", colour = "black", size = .3)  + guides(fill=guide_legend(title=(""))) +
+  theme(axis.text = element_text(size = (12), face = "bold"), axis.title = element_text(size = (14), face = "bold"), 
+        legend.text = element_text(size = (13), face = "bold"), legend.title = element_text(size = (13), face = "bold"), axis.title.x = element_text(margin = margin (t = 8)), axis.title.y = element_text(margin = margin (r = 8))) +
+  scale_y_continuous(labels = scales::percent_format()) + xlab("Controls") + scale_fill_manual(values = c("cadetblue2", "#619CFF"), labels = c("T2", "T1")) + scale_x_discrete(labels = c('A', 'B', 'A', 'B', 'C')) + ylab("Occupied repertoire space") 
+
+p
+
+ggsave("Persisting vs new most abandant VJ.pdf", p, device = "pdf", width = 10, height = 4)
+```
+
+
+
+##Top 10 VJ pair barplot
+
+```{r}
+library(data.table)
+library(ggplot2)
+library(RColorBrewer)
+
+#load a dataset
+mydata <- read.table("file.txt", header = TRUE)
+
+mydata <- mydata[1:10,] #IF TOP 50
+mydata
+
+
+mydata <- mydata[order(mydata$num2, decreasing = FALSE),]
+View(mydata)
+
+coul <- colorRampPalette(coul) (1)
+par(mar=c(6,7.5,1,1)) #Move margin
+par(mgp=c(1.8,1,0)) #Move axis labels closer to axis>1.8
+
+p <- barplot(mydata$num2*100, names.arg = df3$"vj", xlab="Frequency (%)",col = coul1, main="Top 10 VJ pairing ", cex.main=0.9, border="black", horiz = TRUE, las = 2, font.axis=2, cex.names = 0.75, cex.axis =0.75,cex.lab =0.9, font.lab =2,xlim=c(0,5))
+
+p
+
+ggsave("PTop 10 VJ pair barplot.pdf", p, device = "pdf", width = 10, height = 4)
+
+```
+
+
+##Top 100 clones from raw VDJtools processed data
+
+```{r}
+
+#library
+library(dplyr)
+library(WriteXLS)
+
+#load files
+mydata1 <- read.table("file1.txt", header = TRUE)
+mydata2 <- read.table("/file2.txt", header = TRUE)
+mydata3 <- read.table("file3.txt", header = TRUE)
+mydata4 <- read.table("file4.txt", header = TRUE)
+
+mydata1 <- mydata1[, c("cdr3aa", "count")]
+mydata2 <- mydata2[, c("cdr3aa", "count")]
+mydata3 <- mydata3[, c("cdr3aa", "count")]
+mydata4 <- mydata4 [, c("cdr3aa", "count")] 
+
+
+#top 100 clones
+mydata1 <- mydata1[1:100,]
+mydata2 <-mydata2[1:100,]
+mydata3 <- mydata3[1:100,]
+mydata4 <- mydata4[1:100,]
+
+#to sort similarity #nt
+mydata1 <- arrange(mydata1, cdr3aa) 
+mydata2 <- arrange(mydata2, cdr3aa)
+mydata3 <- arrange(mydata3, cdr3aa)
+mydata4 <- arrange(mydata4, cdr3aa)
+
+WriteXLS(mydata1, 'file1_top100.xlsx')
+WriteXLS(mydata2, 'file2_top100.xlsx')
+WriteXLS(mydata3, 'file3_top100.xlsx')
+WriteXLS(mydata4, 'file4_top100.xlsx')
+
+
+```
+
+##Total VJ pairing data from vdjtools processed data
+
+```{r}
+library(data.table)
+library(ggplot2)
+library(tidyverse)
+library(WriteXLS)
+
+#load data
+mydata <- read.table("file.txt", header = TRUE)
+
+mydata <- aggregate(count ~ v/j, FUN = sum, data = mydata)
+
+mydata
+
+
+mydata <- mydata[order(mydata$count, decreasing = TRUE),]
+mydata
+
+mydata <- mydata%>%
+  group_by()%>% 
+  mutate("num2"=count/sum(count))
+
+
+mydata
+WriteXLS(mydata, 'VJ.xlsx')
+    
+```
+
+##Stacked plot for trackclonotypes data
+
+```{r}
+# Packages
+library(ggplot2)
+library(dplyr)
+library(viridis)
+library(reshape2)
+library(RColorBrewer)
+
+
+# load data
+
+mydata <- read.table("file.txt", header = TRUE)
+View(mydata)
+head(mydata)
+
+
+# stacked area chart
+p <- ggplot(mydata, aes(x = Time, y = Abundance, fill = Patients)) +   
+  geom_area(colour = "white", size = .7, alpha = 0.9) + guides(fill=guide_legend(title=("SA Patients"))) +    
+  theme(axis.text = element_text(size = (13)), axis.title = element_text(size = (13), face = "bold"), legend.text = element_text(size = (12)), legend.title = element_text(size = (13), face = "bold")) + scale_x_continuous(breaks = c(1,2,3), labels = c('BL', 'TP2/Before SA', 'TP3/SA')) + scale_y_continuous(breaks = seq(0, 160, 40)) + coord_cartesian(ylim = c(0, 160)) + scale_fill_brewer(palette = "Paired")
+
+p
+
+ggsave("Stacked plot.pdf", p, device = "pdf", width = 10, height = 4)
+
+```
+
+
+
+##Heatmap
+
+
+```{r}
+library(RColorBrewer)
+library(gplots)
+library(tidyverse)
+library(hrbrthemes)
+library(viridis)
+library(plotly)
+library(heatmaply)
+
+#load data
+mydata <- read.table("file.txt"); #tmp/Edit/TRBVeditROBINS.txt", header = TRUE, sep="\t")
+mydata <- data.matrix(mydata)
+mydata[mydata==0] <- NA
+
+
+mydata <- t(mydata)
+mydata <- t(mydata) #Change the axis rotation
+
+p <- heatmaply(mydata, cellnote = mydata,
+          dendrogram = "none",#row
+          xlab = "", ylab = "", 
+          main = "",
+          scale = "none", #row
+          #margins = c(60,100,40,20), #c(60,100,40,20)
+          grid_color = "NA",
+          grid_width = 0.00000005, 
+          #plot_method = "plotly",
+          #colorbar_len = 0.8,
+          
+          titleX = FALSE,
+          hide_colorbar = FALSE,
+          branches_lwd = 0.3,
+          fontsize_row = 9,  fontsize_col = 8, 
+          key.title = "Value\n \n",
+          labCol = colnames(mt1), 
+          labRow = rownames(mt1),
+          heatmap_layers = theme(axis.line=element_blank()))
+
+p
+ggsave("Heatmap.pdf", p, device = "pdf", width = 10, height = 4)
+
+```
+
+
+##Heatmap from joinsample data
+
+```{r pressure, echo=FALSE}
+library(ggplot2)
+library(reshape2)
+library(RColorBrewer)
+
+#load data
+mydata <- read.table("file.txt")
+mydata <- data.matrix(mydata)
+mydata[mydata==0] <- NA
+
+#transpose
+mydata<-t(mydata)
+longData<-melt(mydata)
+View(longData)
+
+
+head(longData)
+
+myPalette<- colorRampPalette(rev(brewer.pal(11, "RdBu")))#brewer.pal(11,)
+
+p<- ggplot(longData, aes(x = Var1, y = Var2, fill = value)) +
+  geom_tile(aes(fill = value)) + scale_fill_gradientn(colours = myPalette(256), name=expression('frequency \nin repertoire')) +
+  theme(axis.text.y = element_text(size = 4))
+
+p
+
+ggsave("Heatmap.pdf", p, device = "pdf", width = 10, height = 4)
+
+```
+
+
+##Antigen species bar plot from meta data,
+Data proceesed by (HLA_data_analysis_vdjdb_2023_final.ipynb) code
+
+```{r}
+library(ggplot2)
+library(tidyr)
+
+#load data
+mydata <- read.csv("file.csv")
+# Reshape the data to have separate rows for Baseline and T1_6
+mydata <- pivot_longer(mydata, cols = c(Baseline, T1_6M), names_to = "Count", values_to = "Value")
+# Convert Epitope_species to factor for correct ordering
+mydata$Epitope_species <- factor(mydata$Epitope_species, levels = unique(mydata$Epitope_species))
+
+# Plot the grouped bar graph
+p <- ggplot(mydata, aes(x = Epitope_species, y = Value, fill = Count)) +
+  geom_bar(stat = "identity", position = position_dodge(), width = 0.8, color = "black") +
+  ylab("Frequency") +
+  xlab("Epitope species")  + 
+  theme(axis.title = element_text(size = 16, face = "bold")) + #scale_fill_manual(values = c("CMV" = "red", "EVB" = "blue", "InfluenzaA" = "green")) +
+  scale_fill_manual(values = c("#009E73", "orange")) +
+  guides(fill=guide_legend(title=(""))) +  
+  expand_limits(y = c(0, 15)) +
+  theme_classic() +
+  theme(legend.position = "top", plot.title = element_text(size = 14, face = "bold"), axis.title = element_text(size = 14, face = "bold"),
+        axis.text.x = element_text(size = 12, face = "bold"),
+        axis.text.y = element_text(size = 12, face = "bold"), legend.text = element_text(size = 12, face = "bold"))
+p
+
+ggsave("Antigen_specificity_barplot.pdf", p, device = "pdf", width = 10, height = 4)
+```
+
+
+##Antigen species bar plot from meta data, with error bar 
+
+
+```{r}
+library(ggplot2)
+library(tidyr)
+library(dplyr)
+
+#load data
+mydata <- read.csv("file.csv")
+
+mydata <- pivot_longer(mydata, cols = c(Baseline, C1_T1), names_to = "Count", values_to = "Value") #cols = c(T1, T2), 
+# Calculate the standard error for each group
+mydata <- mydata %>%
+  group_by(Epitope_species, Count) %>%
+  summarize(Mean = mean(Value, na.rm = TRUE),
+            Error = sd(Value, na.rm = TRUE) / sqrt(sum(!is.na(Value))))
+
+# Convert Epitope_species to factor for correct ordering
+mydata$Epitope_species <- factor(mydata$Epitope_species, levels = unique(mydata$Epitope_species))
+my_colors <- RColorBrewer::brewer.pal(4, "Set1")[3:2]
+
+# Plot the grouped bar graph with error bars
+p <- ggplot(mydata, aes(x = Epitope_species, y = Mean, fill = Count)) +
+  geom_bar(stat = "identity", position = position_dodge(), width = 0.8, color = "black") +
+  geom_errorbar(aes(ymin = Mean, ymax = Mean + Error), width = 0.2, position = position_dodge(0.8)) +
+  ylab("Frequency") +
+  xlab("Epitope species") +
+  theme(axis.title = element_text(size = 16, face = "bold")) +
+  scale_fill_manual(values = my_colors, labels = c("Baseline", "C1+T1")) + #labels = c("Baseline", "C1+T1")
+  guides(fill = guide_legend(title = "")) +
+  expand_limits(y = c(0, max(H$Mean) + max(H$Error))) +
+  theme_classic() +
+  theme(legend.position = "top", plot.title = element_text(size = 14, face = "bold"), axis.title = element_text(size = 14, face = "bold"),
+        axis.text.x = element_text(size = 12, face = "bold"),
+        axis.text.y = element_text(size = 12, face = "bold"), legend.text = element_text(size = 12, face = "bold"))
+
+p
+
+ggsave("Antigen_specificity_barplot.pdf", df, device = "pdf", width = 8, height = 6)
+
+
+```
+
+
+##Trackclonotypes-> top 100 clones
+
+```{r}
+
+library(ggplot2)
+library(dplyr)
+library(tidyverse)
+library(viridisLite)
+library(reshape2)
+library(RColorBrewer)
+
+#load data
+mydata <- read.csv("file.csv")
+
+
+p <- ggplot(mydata, aes(x = Time, y = Value, fill = aa, group = aa)) +   
+  geom_area(position = position_stack(reverse = TRUE), colour = "white", size = 0.3, alpha = 1) + guides(fill=guide_legend(title=(""))) +  ylab("") + xlab("Time") +
+  theme(axis.text = element_text(size = (14), face = "bold" ), axis.title = element_text(size = (16), face = "bold"), legend.position = "None", axis.title.x = element_text(margin = margin (t = 10))) + coord_cartesian(ylim = c(0, 1)) + scale_x_discrete(labels=c("Baseline", "C1+T1", "C2+T2"), expand = c(0,0.14)) +
+   scale_fill_viridis_d(option = "G")
+
+p
+
+
+ggsave("Trackclonotypes_100 clones.pdf", df, device = "pdf", width = 8, height = 6)
+```
+
+#Barplot V_J_integrated
+
+```{r}
+library(ggplot2)
+library(ggpubr)
+library(ggsignif)
+library(RColorBrewer)
+
+# load data
+data <- read.table("file.txt", header = TRUE, sep = "\t")
+data <- data[, -2]
+nonSA_samples <- c("H", "I", "J", "K", "L")
+SA_samples <- c("H", "I", "J", "K", "L")
+grouped_data <- data[data$sample_id %in% c(nonSA_samples, SA_samples), ]
+
+# Calculate the mean values and standard deviations for each J gene based on the groups
+grouped_j_genes <- grouped_data[, grepl("^TRBJ", colnames(grouped_data))] 
+nonSA_mean <- colMeans(grouped_j_genes[grouped_data$sample_id %in% nonSA_samples, ], na.rm = TRUE)
+SA_mean <- colMeans(grouped_j_genes[grouped_data$sample_id %in% SA_samples, ], na.rm = TRUE)
+nonSA_sd <- apply(grouped_j_genes[grouped_data$sample_id %in% nonSA_samples, ], 2, sd, na.rm = TRUE)
+SA_sd <- apply(grouped_j_genes[grouped_data$sample_id %in% SA_samples, ], 2, sd, na.rm = TRUE)
+
+# Create a data frame of mean values, standard deviations, and J gene names
+mean_data <- data.frame(J_gene = names(nonSA_mean),
+                        NonSA_mean = nonSA_mean,
+                        SA_mean = SA_mean,
+                        NonSA_sd = nonSA_sd,
+                        SA_sd = SA_sd)
+
+# Sort the mean data in decreasing order based on NonSA_mean
+mean_data <- mean_data[order(mean_data$NonSA_mean, decreasing = TRUE), ]
+
+# Set colors for the groups
+my_colors <- RColorBrewer::brewer.pal(4, "Set1")[3:2]  # Specify your desired colors
+nonSA_color <- my_colors[1]
+SA_color <- my_colors[2]
+
+# Reshape the data for side-by-side bar plot
+mean_data_long <- tidyr::gather(mean_data, "Group", "Value", -J_gene, -NonSA_sd, -SA_sd)
+
+# Sort the mean data in decreasing order based on NonSA_mean and select the top 10 rows
+mean_data <- mean_data[order(mean_data$NonSA_mean, decreasing = TRUE), ][1:10, ] 
+
+
+# Subset the mean_data_long to include only the top 10 V genes
+mean_data_long <- mean_data_long[mean_data_long$J_gene %in% mean_data$J_gene, ]
+
+# Create the grouped bar plot 
+p <- ggplot(mean_data_long, aes(x = reorder(J_gene, -Value), y = Value, fill = Group)) +
+  geom_bar(position = position_dodge(), stat = "identity", width = 0.6, color = "black") +
+  labs(ylab = "Value", main = "Grouped Bar Plot") +
+  scale_fill_manual(values = my_colors, guide = "none") +  # Use the specified colors #labels = c("NonSA", "SA") for label name
+  theme_pubr() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1), axis.title.x = element_blank(),  # Remove x-axis title
+        axis.title.y = element_text(size = 14))
+
+p
+
+ggsave("Top10J.pdf", p, device = "pdf", width = 8, height = 6)
+
+
+# Add error bars
+p <- p + geom_errorbar(aes(ymin = Value - ifelse(Group == "NonSA", NonSA_sd, SA_sd),
+                           ymax = Value + ifelse(Group == "NonSA", 0, SA_sd)),
+                       position = position_dodge(width = 0.6), width = 0.2)
+
+
+
+# Add p-values to the mean_data data frame 
+#p value calculated using Wilcoxon Rank-Sum test (groups come from different populations)
+p_values <- sapply(mean_data$J_gene, function(j_gene) {
+  nonSA_values <- grouped_j_genes[grouped_data$sample_id %in% nonSA_samples, j_gene]
+  SA_values <- grouped_j_genes[grouped_data$sample_id %in% SA_samples, j_gene]
+  wilcox.test(nonSA_values, SA_values, exact = FALSE)$p.value
+})
+mean_data$p_value <- p_values
+mean_data
+# Save mean_data as a CSV file
+write.csv(mean_data, file = "Top10J_pvalue.csv", row.names = FALSE)
+
+# Add p-values to the mean_data_long data frame
+mean_data_long$p_value <- mean_data$p_value
+
+# Create the grouped bar plot with error bars and p-value annotations
+p <- ggplot(mean_data_long, aes(x = reorder(J_gene, -Value), y = Value, fill = Group)) +
+  geom_bar(position = position_dodge(), stat = "identity", width = 0.6, color = "black") +
+  labs(ylab = "Value", main = "Grouped Bar Plot") +
+  scale_fill_manual(values = my_colors, guide = "none") +  # Use the specified colors
+  theme_pubr() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+        axis.title.x = element_blank(),
+        axis.title.y = element_text(size = 14))
+
+# Add only upper error bars
+p <- p + geom_errorbar(aes(ymin = Value, ymax = Value + ifelse(Group == "NonSA", 0, SA_sd)),
+                       position = position_dodge(width = 0.6), width = 0.2) +
+  scale_fill_manual(labels = c("NonSA", "SA"), values = my_colors, guide = "none")# Remove the legend for group labels 
+
+#lower error bar -> ymin = Value - ifelse(Group == "NonSA", NonSA_sd, SA_sd) 
+
+
+
+p
+
+ggsave("Top10J_errorbar.pdf", p, device = "pdf", width = 8, height = 6)
+
+
+
+# Add p-values as text annotations
+q <- p + geom_text(aes(label = paste0("p = ", format(p_value, scientific = TRUE, digits = 2))),
+                   vjust = -0.5, position = position_dodge(width = 0.6)) 
+
+# Print the plot
+print(q)
+
+
+```
+
+
