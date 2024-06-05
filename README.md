@@ -16,6 +16,6 @@ In conclusion, our data demonstrate that (i) peripheral immunological alteration
 
 <b>Data analysis:</b>
 <br>
-Raw sequencing data generated from Illumina MiSeq was de-multiplexed using Illumina's bcl2fastq software. Afterwards, MixCR tool was used to amalyze the data which includes alignment with the reference database. The MiXCR processed data was further analyzed using various R and Python tools, along with custom scripts.
+Raw sequencing data generated from Illumina MiSeq was de-multiplexed using Illumina's bcl2fastq software. Afterwards, MixCR tool was used to pre-process the data which includes alignment with the reference database. The MiXCR processed data was further analyzed using various R and Python tools, along with custom scripts.
 
 </div>
