@@ -1,11 +1,11 @@
 # immunerepertoire-analysis-ALEM
 <div style="text-align: justify;">
 <b>Alemtuzumab-induced immune phenotype and repertoire changes: implications for secondary autoimmunity</b> <br>
-<b>Authors:</b> Tobias Ruck#, Sumanta Barman#, Andreas Schulte-Mecklenbeck#, Steffen Pfeuffer#, Falk Steffen, Christopher Nelke, Christina B Schroeter, Alice Willison, Michael Heming, Thomas Müntefering, Nico Melzer, Julia Krämer, Maren Lindner, Marianne Riepenhausen, Catharina C Gross, Luisa Klotz, Stefan Bittner, Paolo A Muraro, Tilman Schneider-Hohendorf, Nicholas Schwab, Gerd Meyer zu Hörste, Norbert Goebels, Sven G Meuth, Heinz Wiendl. <b>#equally contributing first authors</b> <br>
+<b>Authors:</b> Tobias Ruck#, <b>Sumanta Barman#</b>, Andreas Schulte-Mecklenbeck#, Steffen Pfeuffer#, Falk Steffen, Christopher Nelke, Christina B Schroeter, Alice Willison, Michael Heming, Thomas Müntefering, Nico Melzer, Julia Krämer, Maren Lindner, Marianne Riepenhausen, Catharina C Gross, Luisa Klotz, Stefan Bittner, Paolo A Muraro, Tilman Schneider-Hohendorf, Nicholas Schwab, Gerd Meyer zu Hörste, Norbert Goebels, Sven G Meuth, Heinz Wiendl. <b>#equally contributing first authors</b> <br>
 <b>Journal:</b> Brain <br>
 <b>Year:</b> 2022
 
-
+<br>
 <b>Abstract</b>
 
 Alemtuzumab is a monoclonal antibody that causes rapid depletion of CD52-expressing immune cells. It has proven to be highly efficacious in active relapsing–remitting multiple sclerosis; however, the high risk of secondary autoimmune disorders has greatly complicated its use. Thus, deeper insight into the pathophysiology of secondary autoimmunity and potential biomarkers is urgently needed. The most critical time points in the decision-making process for alemtuzumab therapy are before or at Month 12, where the ability to identify secondary autoimmunity risk would be instrumental. Therefore, we investigated components of blood and CSF of up to 106 multiple sclerosis patients before and after alemtuzumab treatment focusing on those critical time points.
