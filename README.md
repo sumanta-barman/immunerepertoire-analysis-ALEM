@@ -1,12 +1,12 @@
 # immunerepertoire-analysis-ALEM
 
-Alemtuzumab-induced immune phenotype and repertoire changes: implications for secondary autoimmunity <br>
+<b>Alemtuzumab-induced immune phenotype and repertoire changes: implications for secondary autoimmunity</b> <br>
 Authors: Tobias Ruck#, Sumanta Barman#, Andreas Schulte-Mecklenbeck#, Steffen Pfeuffer#, Falk Steffen, Christopher Nelke, Christina B Schroeter, Alice Willison, Michael Heming, Thomas Müntefering, Nico Melzer, Julia Krämer, Maren Lindner, Marianne Riepenhausen, Catharina C Gross, Luisa Klotz, Stefan Bittner, Paolo A Muraro, Tilman Schneider-Hohendorf, Nicholas Schwab, Gerd Meyer zu Hörste, Norbert Goebels, Sven G Meuth, Heinz Wiendl. #equally contributing first authors <br>
 Journal: Brain <br>
 Year: 2022
 
 
-Abstract
+<b>Abstract</b>
 
 Alemtuzumab is a monoclonal antibody that causes rapid depletion of CD52-expressing immune cells. It has proven to be highly efficacious in active relapsing–remitting multiple sclerosis; however, the high risk of secondary autoimmune disorders has greatly complicated its use. Thus, deeper insight into the pathophysiology of secondary autoimmunity and potential biomarkers is urgently needed. The most critical time points in the decision-making process for alemtuzumab therapy are before or at Month 12, where the ability to identify secondary autoimmunity risk would be instrumental. Therefore, we investigated components of blood and CSF of up to 106 multiple sclerosis patients before and after alemtuzumab treatment focusing on those critical time points.
 
