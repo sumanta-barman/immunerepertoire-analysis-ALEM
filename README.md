@@ -14,4 +14,8 @@ Consistent with previous reports, deep flow cytometric immune-cell profiling (n 
 
 In conclusion, our data demonstrate that (i) peripheral immunological alterations following alemtuzumab are mirrored by longitudinal changes in the CSF; (ii) incomplete T-cell repertoire renewal and reduced thymopoiesis contribute to a proautoimmune state after alemtuzumab; (iii) proteomics and surface immunological phenotyping do not identify patients at risk for secondary autoimmune disorders; (iv) homeostatic proliferation with disparate dynamics of clonal T- and B-cell expansions are associated with secondary autoimmunity; and (v) hyperexpanded T-cell clones at baseline and Month 12 may be used as a biomarker for the risk of alemtuzumab-induced autoimmunity.
 
+<b>Data analysis:</b>
+<br>
+Raw sequencing data generated from Illumina MiSeq was de-multiplexed using Illumina's bcl2fastq software. Afterwards, MixCR tool was used to amalyze the data which includes alignment with the reference database. The MiXCR processed data was further analyzed using various R and Python tools, along with custom scripts.
+
 </div>
